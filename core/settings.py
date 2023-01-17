@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # External Apps
-    'restframework',
+    'rest_framework',
+    'django_filters',
     # Internal Apps
     'authentication',
+    'test_api',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +84,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+# Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'core.filter_backend.CustomFilterBackend',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'core.pagination.CustomPagination',
+    'PAGE_SIZE': 100,
 }
 
 
