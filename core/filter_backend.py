@@ -7,7 +7,5 @@ class CustomFilterBackend(filters.DjangoFilterBackend):
         # merge filterset kwargs provided by view class
         if hasattr(view, 'get_filterset_kwargs'):
             kwargs.update(view.get_filterset_kwargs())
-
-        print(view.get_filterset_kwargs)
         
         return kwargs

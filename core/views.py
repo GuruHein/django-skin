@@ -1,6 +1,7 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework import status, permissions
 from rest_framework.mixins import ListModelMixin
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import Request, Response
 from django_filters import rest_framework as filters
 from .filter_backend import CustomFilterBackend
@@ -10,11 +11,7 @@ class BaseGenericAPIView(GenericAPIView):
     filter_backends = (CustomFilterBackend,)
     prefetch_related_fields = []
     select_related_fields = []
-    # get_filterset_kwargs = ['gt', 'gte', 'lt', 'lte', 'contain', 'exact', 'iexact', 'icontain']
     filterset_fields = "__all__"
-    
-    def get_filterset_kwargs(self):
-        return ['gt', 'gte', 'lt', 'lte', 'contain', 'exact', 'iexact', 'icontain']
     
     def get_queryset(self):
         return self.model.objects.all().prefetch_related(*self.prefetch_related_fields).select_related(*self.select_related_fields)
@@ -28,6 +25,7 @@ class BaseGenericAPIView(GenericAPIView):
         if params:
             sorts = params.split(',')
             rmv_sign_sort = [sort.replace("-", "") for sort in sorts]
+            # need to validate sorts params
             return sorts
         return []
     
